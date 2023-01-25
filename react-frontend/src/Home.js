@@ -3,11 +3,14 @@ import { useAuth } from "./context/AuthProvider";
 import { useState } from "react";
 
 import axios from 'axios';
+import { Login } from "./Login";
+import { Register } from "./Register";
 
 export const Home = () => {
   const { value } = useAuth();
   const [usernameInput, setUsernameInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
+  const [currentForm, setCurrentForm] = useState('login');
 
   const handleUsernameChange = (e) => {
     setUsernameInput(e.target.value);
@@ -15,6 +18,10 @@ export const Home = () => {
 
   const handlePasswordChange = (e) => {
     setPasswordInput(e.target.value);
+  }
+
+  const toggleForm = (formName) => {
+    setCurrentForm(formName);
   }
 
   const handleClick = () => {
@@ -65,33 +72,34 @@ export const Home = () => {
 
 
   return (
-    <>
-      <h2>Home (Public)</h2>
-      <form>
+
+    <div className="App">
+      {
+        currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm}/>
+      }
+    </div>
+  //   <>
+  //     <h2>Home (Public)</h2>
+  //     <form>
         
-        <label htmlFor="Username"> Username </label>
-        <input 
-        type="text"
-        value={usernameInput} 
-        onChange={handleUsernameChange}
-        ></input>
+  //       <label htmlFor="Username"> Username </label>
+  //       <input 
+  //       type="text"
+  //       value={usernameInput} 
+  //       onChange={handleUsernameChange}
+  //       ></input>
 
-        <label> Password </label>
-        <input 
-        type="text" 
-        value={passwordInput}
-        onChange={handlePasswordChange}
-        ></input>
+  //       <label> Password </label>
+  //       <input 
+  //       type="text" 
+  //       value={passwordInput}
+  //       onChange={handlePasswordChange}
+  //       ></input>
 
-      {/* pass in makePostCall */}
-      <button type="button" onClick={() => makePostCall(usernameInput, passwordInput)}>
-        Sign In
-      </button>
-      {/* <button type="button" onClick={handleClick}>
-        Sign In
-      </button> */}
-
-      </form>
-  </>
+  //     <button type="button" onClick={() => makePostCall(usernameInput, passwordInput)}>
+  //       Sign In
+  //     </button>
+  //     </form>
+  // </>
 );
 };
