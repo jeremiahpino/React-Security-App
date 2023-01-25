@@ -29,18 +29,34 @@ export const Home = () => {
 
   // create a aync function to login someone
   // pass in use states and make structure 
-  async function makePostCall(person) {
+  async function makePostCall(uName, pWord) {
     try {
 
-      // save response and return to frontend 
-      const response = await axios.post('http://localhost:5001/login', person)
+      // create user struct 
+      var user = {
+        "username": uName,
+        "password": pWord
+      }
 
-      return response;
+      // call backend wait for response and send back to frontend
+      const response = await axios.post('http://localhost:5001/login', user)
+
+      console.log(response.status);
+
+      if(response.status === 201){
+        return value.onLogin();
+      }
+      else {
+        return response;
+      }
+
     }
     catch (error) {
 
       // print out error if error occurs
       console.log(error);
+
+      alert("Login Failed.");
 
       return false;
 
@@ -68,9 +84,12 @@ export const Home = () => {
         ></input>
 
       {/* pass in makePostCall */}
-      <button type="button" onClick={handleClick}>
+      <button type="button" onClick={() => makePostCall(usernameInput, passwordInput)}>
         Sign In
       </button>
+      {/* <button type="button" onClick={handleClick}>
+        Sign In
+      </button> */}
 
       </form>
   </>

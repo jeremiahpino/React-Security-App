@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('This is JPs App');
+    res.send('This is JPs App!');
 });
 
 app.listen(port, () => {
@@ -20,32 +20,33 @@ app.listen(port, () => {
 const users = {
     users_list : [
         {
-            username : "bob",
-            password : "noPass"
+            username : "jpino",
+            password : "fakepass"
         }
     ]
 }
 
-
-
 // make a post route 
 app.post('/login', (req, res) => {
 
-    // uName = req.body.username;
-    // pWord = req.body.password;
+    // get password and username from json object
+    uName = req.body.username;
+    pWord = req.body.password;
 
-    // if ( ("jpino" === uName) && ("fakePass" === pWord)) {
+    if( (uName === "jpino") && (pWord === "fakepass") ) {
 
-    // }
+        console.log("success");
 
-    if(req.body.password === "fakePass") {
+        // sucessful login
+        res.status(201).send().end();
 
-        res.status(201).end();
     }
     else {
-        res.status(404).end();
-    }
 
-    
+        // failed login
+        console.log("fail")
+
+        res.status(404).send("Resource not found.").end();
+    }
 
 });
