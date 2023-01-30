@@ -95,7 +95,6 @@ export const Register = (props) => {
             ></input>
             <p>{errorMessage}</p>
 
-            {/* pass in makePostCall */}
             <button type="button" onClick={() => passwordValidation()}>
                 Signup
             </button>

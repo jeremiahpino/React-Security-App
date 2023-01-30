@@ -42,7 +42,14 @@ app.post('/account/login', (req, res) => {
     uName = req.body.username;
     pWord = req.body.password;
 
-    if( (uName === "jpino") && (pWord === "Jeremiah@1") ) {
+    // find user if in database
+    const result = findUserByPasswordAndUsername(uName, pWord);
+
+    console.log(result);
+    console.log(result[0].username);
+    console.log(result[0].password);
+
+    if( (uName === result[0].username) && (pWord === result[0].password) ) {
 
         console.log("success");
 
@@ -81,12 +88,45 @@ app.post('/account/signup', (req, res) => {
 // get all users
 app.get('/users', (req, res) => {
 
+    allUsers = getAllUsers();
 
+    const username = req.query['username'];
+    let result = findUserByUsername(username);
+
+    // error checking 
+    if (allUsers === undefined || allUsers.length == 0) {
+        res.status(404).send('Resource not found.');
+    }
+    // error checking 
+    if (result === undefined || result.length == 0)
+         
+        // return all users
+         res.status(201).send(allUsers).end();
+
+    else {
+        mresult = {users_list : result}
+        // return specific user
+        res.send(mresult).end();
+    }
 
 })
 
-// get user by username
-
 function addUser(user) {
     users['users_list'].push(user);
+}
+
+function findUserByUsername(uname) {
+    return users['users_list'].filter( (user) => user['username'] === uname);
+}
+
+function findUserByPassword(pword) {
+    return users['users_list'].filter( (user) => user['password'] === pword);
+}
+
+function findUserByPasswordAndUsername(uname, pword) {
+    return users['users_list'].filter( (user) => (user['username'] === uname) && (user['password'] === pword) )
+}
+
+function getAllUsers() {
+    return users['users_list'];
 }

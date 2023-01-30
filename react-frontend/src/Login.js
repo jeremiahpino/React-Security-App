@@ -75,9 +75,6 @@ export const Login = (props) => {
             onChange={handlePasswordChange}
             ></input>
 
-            {/* <button type="button" onClick={() => loginPostCall(usernameInput, passwordInput)}>
-                Login
-            </button> */}
             <button type="button" onClick={() => loginPostCall(usernameInput, passwordInput)}>
                 Login
             </button>
