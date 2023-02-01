@@ -7,6 +7,7 @@ export const Login = (props) => {
 
     const [usernameInput, setUsernameInput] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
+    const [errorMessage, setMessage] = useState('');
     const { value } = useAuth();
     const loginToken = '2342f2f1d131rf12';
 
@@ -21,6 +22,8 @@ export const Login = (props) => {
     // create a aync function to login someone
     // pass in use states and make structure 
     async function loginPostCall(uName, pWord) {
+
+      //setMessage('');
     try {
 
       // create user struct 
@@ -37,6 +40,7 @@ export const Login = (props) => {
 
       // if 201 successful login (give user token)
       if(response.data === loginToken){
+        setMessage("Login is valid.");
         return value.onLogin();
       }
       else {
@@ -49,7 +53,8 @@ export const Login = (props) => {
       // print out error if error occurs
       console.log(error);
 
-      alert("Login Failed.");
+      setMessage("Login failed.");
+      //alert("Login Failed.");
 
       return false;
 
@@ -74,6 +79,8 @@ export const Login = (props) => {
             value={passwordInput}
             onChange={handlePasswordChange}
             ></input>
+
+            <p>{errorMessage}</p>
 
             <button type="button" onClick={() => loginPostCall(usernameInput, passwordInput)}>
                 Login
