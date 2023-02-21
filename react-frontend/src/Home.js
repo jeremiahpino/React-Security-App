@@ -15,6 +15,7 @@ export const Home = () => {
 
     <div className="App">
       {
+        // send onFormSwitch as props to Login and Register js
         currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm}/>
       }
     </div>

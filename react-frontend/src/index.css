@@ -116,3 +116,11 @@ button {
 .line {
   display: inline-block;
 }
+
+.contactButton {
+  margin-bottom: 10px;
+}
+
+.contactTable {
+  border: 2px solid black;
+}

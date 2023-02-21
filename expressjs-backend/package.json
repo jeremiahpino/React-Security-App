@@ -2,17 +2,20 @@
   "name": "expressjs-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "mongoBackend.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "dev": "nodemon mongoBackend.js",
+    "start": "node mongoBackend.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.9.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
