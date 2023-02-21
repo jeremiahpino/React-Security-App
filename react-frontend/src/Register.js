@@ -9,7 +9,6 @@ export const Register = (props) => {
     const [passwordInput, setPasswordInput] = useState('');
     const [errorMessage, setMessage] = useState('');
     const [phoneInput, setPhoneInput] = useState('');
-    var tokenCookie;
 
     const { value } = useAuth();
 

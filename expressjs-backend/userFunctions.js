@@ -83,3 +83,4 @@ exports.findUserById = findUserById;
 exports.addUser = addUser;
 exports.findExactUser = findExactUser;
 exports.deleteUser = deleteUser;
+exports.findUserByName = findUserByName;

@@ -2,6 +2,9 @@
 const https = require("https");
 const fs = require("fs");
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 const express = require('express');
 const app = express();
 const port = 5001;
@@ -41,13 +44,40 @@ app.post('/account/login', async (req, res) => {
     console.log(uName);
     console.log(pWord);
 
-    // find user if in database
-    const result = await userFuns.findExactUser(uName, pWord);
-    const token = generateAccessToken({ username: req.body.username });
+    // encrypt password
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hash = bcrypt.hashSync(pWord, salt);  
 
+    console.log("hash in login:", hash);
+
+    // find user if in database
+    //const result = await userFuns.findExactUser(uName, pWord);
+
+    const result = await userFuns.findUserByName(uName);
+
+    // get schema of username
     console.log("result in login", result);
 
-    if(result.length === 0) {
+    // check if result is empty
+    if(result.length === 0){
+        // failed login
+        console.log("fail")
+        res.status(500).end();
+        return;
+    }
+
+    // password from result
+    //console.log("password in login", result[0].password);
+
+    // see if password of user matches hash
+    boolVal = bcrypt.compareSync(pWord, result[0].password);
+    console.log(boolVal);
+    
+    // generate access token
+    const token = generateAccessToken({ username: req.body.username });
+
+    // bool val is false 
+    if(boolVal === false) {
         
         // failed login
         console.log("fail")
@@ -81,7 +111,15 @@ app.post('/account/signup', async (req, res) => {
     console.log(req.body.password);
     console.log(req.body.phoneNumber);
 
+    // encrypt password
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hash = bcrypt.hashSync(req.body.password, salt);    
+
+    req.body.password = hash;
+
+    console.log(req.body.password);
     console.log(req.body);
+    
     // save user struct
     const userToAdd = req.body;
 

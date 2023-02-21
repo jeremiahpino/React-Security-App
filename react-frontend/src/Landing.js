@@ -35,7 +35,7 @@ export const Landing = () => {
     try {
 
       // delete a user by id
-      const response = await axios.delete('http://localhost:5001/users/' + rowId);
+      const response = await axios.delete('https://localhost:5001/users/' + rowId);
 
       // return response to caller
       return response;
